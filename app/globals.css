@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ✅ THIS IS REQUIRED IN TAILWIND v4 */
+@reference utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #dddddd;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #5c5c7b;
+  border-radius: 50px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #7878a3;
+}
+
+/*  Use components layer for composed styles */
+@layer components {
+  .input-class {
+    @apply text-[16px]
+           placeholder:text-[16px]
+           rounded-lg
+           border
+           border-gray-300
+           text-gray-500
+           placeholder:text-gray-500;
+  }
+
+  .sheet-content button {
+    @apply focus:ring-0
+           focus-visible:ring-transparent
+           focus:ring-offset-0
+           focus-visible:ring-offset-0
+           focus-visible:outline-none
+           focus-visible:border-none;
+  }
+
+  .text14_pdding10 {
+    @apply text-[14px] px-4 py-2.5 font-semibold;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}
