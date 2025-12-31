@@ -23,7 +23,7 @@ const Sidebar = ({user}: SiderbarProps) => {
                 <div className='relative size-6'>
                     <Image src={item.imgURL} alt={item.label} fill className={cn({'brightness-[3] invert-0': isActive})}/>
                 </div>
-                <p className={cn('text-16 font-semibold text-black-2', { "text-white!": isActive})}>
+                <p className={cn('text-16 font-semibold text-black-200 max-xl:hidden', { "text-white!": isActive})}>
                 {item.label}
                 </p>
                 </Link>

@@ -1,9 +1,10 @@
 import React from 'react'
 import HeaderBox from '@/components/HeaderBox';
 import TotalBalanceBox from '@/components/TotalBalanceBox';
+import RightSidebar from '@/components/RightSidebar';
 
 const Home = () => {
-  const loggedIn = {firstName: 'Faateeha'}
+  const loggedIn = {firstName: 'Faateeha', lastName: 'Adeyemi', email: 'fathiaomolara02@gmail.com'}
   return (
    <section className="no-scrollbar flex w-full flex-row max-xl:max-h-screen max-xl:overflow-y-scroll">
     <div className=' no-scrollbar flex w-full flex-1 flex-col gap-8 px-5 sm:px-8 py-7 lg:py-12 xl:max-h-screen xl:overflow-y-scroll'>
@@ -20,7 +21,10 @@ const Home = () => {
        totalCurrentBalance={1250.35}
        />
       </header>
+      Recent transaction
     </div>
+
+    <RightSidebar user={loggedIn} transactions={[]} banks={[{currentBalance: 123.50}, {currentBalance: 500.45}]}/>
    </section>
   )
 }
