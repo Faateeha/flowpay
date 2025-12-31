@@ -5,35 +5,54 @@ import Image from 'next/image';
 const BankCard = ({account, userName, showBalance = true} : CreditCardProps) => {
     return (
         <div className="flex flex-col">
-            <Link href="/" className='relative flex h-[190px] w-full max-w-[320px] justify-between rounded-[20px] border border-white bg-green-700 shadow-creditCard backdrop-blur-[6px] no-underline'>
-            <div className='relative z-10 flex size-full max-w-[228px] flex-col justify-between rounded-l-[20px] bg-green-700 px-5 pb-4 pt-5'>
-                <div>
-                <h1 className='text-16 font-semibold text-white'>
-                    {account.name || 'fateeha'}
-                </h1>
-                <p className='font-ibm-plex-serif font-black text-white '>
-                    {formatAmount(account.currentBalance)}
-                </p>
-            </div>
-            <article className='flex flex-col gap-2'>
-                <div className='flex justify-between'>
-                    <h4 className='text-5 font-semibold text-white'>
-                        {userName}
-                    </h4>
-                    <h4 className='text-5 font-semibold text-white pl-3'>
-                        ** / **
-                    </h4>
-                </div>
-                <p className='text-4 font-semibold tracking-[1.1px] text-white'>
-                    **** **** **** <span className='text-16'> ${account.mask} </span>
-                </p>
-            </article>
-            </div>
+            <Link
+  href="/"
+  className="relative flex h-[190px] no-underline w-full max-w-[320px] rounded-2xl bg-linear-to-br from-green-700 to-green-800
+ p-5 shadow-creditCard transition-transform hover:scale-[1.02]"
+>
+  {/* LEFT SIDE */}
+  <div className="flex flex-1 flex-col justify-between text-white">
+    <div className="space-y-1">
+      <h1 className="text-sm font-medium opacity-80">
+        {account.name || 'Fateeha'}
+      </h1>
 
-            <div className='flex size-full flex-1 flex-col items-end justify-between rounded-r-[20px] bg-bank-gradient bg-cover bg-center bg-no-repeat py-5 pr-5;'>
-                <Image />
-            </div>
-            </Link>
+      <p className="text-2xl font-bold tracking-tight">
+        {formatAmount(account.currentBalance)}
+      </p>
+    </div>
+
+    <div className="space-y-2">
+      <p className="text-xs tracking-widest opacity-80">
+        ●●●● ●●●● ●●●● <span className="text-sm font-semibold">$1234</span>
+      </p>
+
+      <div className="flex items-center justify-between text-xs opacity-80">
+        <span>{userName}</span>
+        <span>●● / ●●</span>
+      </div>
+    </div>
+  </div>
+
+  {/* RIGHT SIDE */}
+  <div className="flex flex-col items-end justify-between pl-4">
+    <Image
+      src="/icons/paypass.png"
+      alt="paypass"
+      width={20}
+      height={24}
+      className="opacity-90"
+    />
+
+    <Image
+      src="/icons/mastercard.png"
+      alt="mastercard"
+      width={45}
+      height={32}
+    />
+    </div>
+     </Link>
+
         </div>
     )
 }
