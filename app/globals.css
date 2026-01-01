@@ -49,6 +49,8 @@
   border: 1px solid #d1d5db; /* border-gray-300 */
   border-radius: 0.5rem;     /* rounded-lg */
   outline: none;
+  margin-bottom: 4px;
+  
 }
 
 /* Placeholder styling */
