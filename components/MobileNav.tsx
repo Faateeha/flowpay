@@ -28,10 +28,10 @@ const MobileNav = ({ user }: MobileNavProps) => {
         <SheetContent side="left" className="border-none bg-white">
           <Link
             href="/"
-            className=" cursor-pointer flex items-center gap-1 px-4"
+            className=" cursor-pointer flex items-center gap-1 px-4 no-underline"
           >
             <Image src="/icons/logo.png" alt="logo" width={34} height={34} />
-            <h1 className="text-26 font-ibm-plex-serif font-bold text-black-200">
+            <h1 className="text-26 font-ibm-plex-serif font-bold text-black">
               Flowpay
             </h1>
           </Link>
@@ -48,7 +48,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
                       href={item.route}
                       key={item.label}
                       className={cn(
-                        "flex gap-3 items-center p-4 rounded-lg w-full max-w-60",
+                        "flex gap-3 items-center p-4 rounded-lg w-full max-w-60 no-underline",
                         { "bg-green-400": isActive }
                       )}
                     >
