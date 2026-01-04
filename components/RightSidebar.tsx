@@ -10,10 +10,10 @@ const RightSidebar = ({user, transactions, banks} : RightSidebarProps) => {
         <div className='h-[120px] w-full bg-cover bg-no-repeat' style={{backgroundImage: "url('/icons/logo.png')"}}>
         <div className="relative flex px-6 max-xl:justify-center">
           <div className="flex-center absolute top-8 size-24 rounded-full bg-gray-100 border-8 border-white p-2 shadow-profile">
-            <span className="text-5xl font-bold text-green-400">{user.firstName[0]}</span>
+            <span className="text-5xl font-bold text-green-400">{user.name[0]}</span>
           </div>
           <div className="flex flex-col pt-32">
-            <h1 className="text-24 font-semibold text-gray-900"> {user.firstName} {user.lastName}</h1>
+            <h1 className="text-24 font-semibold text-gray-900"> {user.name}</h1>
             <p className='text-16 font-normal text-gray-600'>{user.email}</p>
           </div>
         </div>
