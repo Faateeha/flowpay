@@ -14,7 +14,7 @@ const BankCard = ({account, userName, showBalance = true} : CreditCardProps) => 
   <div className="flex flex-1 flex-col justify-between text-white">
     <div className="space-y-1">
       <h1 className="text-sm font-medium opacity-80">
-        {account.name || 'Fateeha'}
+        { userName }
       </h1>
 
       <p className="text-2xl font-bold tracking-tight">
