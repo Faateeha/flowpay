@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import {PlaidLinkOnSuccess, PlaidLinkOptions, usePlaidLink} from 'react-plaid-link';
 import { useRouter } from 'next/navigation';
-import { createLinkToken } from '@/lib/actions/user.action';
+import { createLinkToken, exchangePublicToken } from '@/lib/actions/user.actions';
+import { PlaidLinkProps } from '@/types';
 
 const Plaidlink = ({user, variant}: PlaidLinkProps) => {
     const router = useRouter();
@@ -17,11 +18,12 @@ const Plaidlink = ({user, variant}: PlaidLinkProps) => {
 
         getLinkToken()
     }, [user])
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     const onSuccess = useCallback<PlaidLinkOnSuccess>(async (public_token: string) => {
-       // await exchangePublicToken({
-        //    publicToken: public_token,
-        //    user,
-        //})
+       await exchangePublicToken({
+         publicToken: public_token,
+           user,
+        })
         router.push('/')
     }, [user])
     const config: PlaidLinkOptions = {
@@ -36,12 +38,12 @@ const Plaidlink = ({user, variant}: PlaidLinkProps) => {
             Connect bank
         </Button>
     ): variant === 'ghost' ? (
-        <Button>
-            Connect bank
+        <Button onClick={() => open()} variant="ghost" className="flex cursor-pointer items-center justify-center gap-3 rounded-lg px-3 py-7 hover:bg-white lg:justify-start">
+            <p className='hiddenl text-16px font-semibold text-black-2 xl:block'>Connect bank</p>
         </Button>
     ): (
-        <Button>
-            connect bank
+        <Button onClick={() => open()} className="flex justify-start! cursor-pointer gap-3 rounded-lg bg-transparent! flex-row">
+            <p className='text-[16px] font-semibold text-black-2'>Connect bank</p>
         </Button>
     )}
     </>

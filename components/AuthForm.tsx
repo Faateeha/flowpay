@@ -11,7 +11,7 @@ import { authFormSchema } from "@/lib/utils";
 import CustomInput from "./Custominput";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getLoggedInUser, signIn, signUp } from "@/lib/actions/user.action";
+import { getLoggedInUser, signIn, signUp } from "@/lib/actions/user.actions";
 import Plaidlink from "./PlaidLink";
 
 const AuthForm = ({ type }: { type: string }) => {
@@ -33,11 +33,13 @@ const AuthForm = ({ type }: { type: string }) => {
 
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    setIsLoading(true);
-    try {
-      //signup with appwrite & create plaid token
-      if (type === "sign-up") {
-        const userData = {
+      setIsLoading(true);
+
+      try {
+        // Sign up with Appwrite & create plaid token
+        
+        if(type === 'sign-up') {
+          const userData = {
             firstName: data.firstName!,
             lastName: data.lastName!,
             address1: data.address1!,
@@ -49,24 +51,26 @@ const AuthForm = ({ type }: { type: string }) => {
             email: data.email,
             password: data.password
           }
-          
-        const newUser = await signUp(userData);
-        
-        setUser(newUser);
-      }
-      if (type === 'sign-in'){
-        const response = await signIn({
+
+          const newUser = await signUp(userData);
+
+          setUser(newUser);
+        }
+
+        if(type === 'sign-in') {
+          const response = await signIn({
             email: data.email,
-            password: data.password
-        })
-        if (response) router.push('/')
+            password: data.password,
+          })
+
+          if(response) router.push('/')
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
     }
-  };
 
   return (
     <section className="flex min-h-screen w-full max-w-[420px] flex-col justify-center gap-5 py-10 md:gap-8">
@@ -91,11 +95,11 @@ const AuthForm = ({ type }: { type: string }) => {
           </h3>
         </div>
       </header>
-      {/*{user ? ( */}
+      {user ? ( 
         <div className="flex flex-col gap-4">
           <Plaidlink user={user} variant="primary"/>
         </div>
-      {/*}) : ( */}
+      ) : ( 
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -200,14 +204,14 @@ const AuthForm = ({ type }: { type: string }) => {
                 : "Already have an account?"}
             </p>
             <Link
-              href={type === "sign-in" ? "/sign-up" : "sign-in"}
+              href={type === "sign-in" ? "/sign-up" : "/sign-in"}
               className="no-underline text-[14px] cursor-pointer font-medium text-green-500"
             >
               {type === "sign-in" ? "Sign up" : "Sign in"}
             </Link>
           </footer>
         </>
-     {/* )} */}
+      )} 
     </section>
   );
 };

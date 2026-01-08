@@ -124,7 +124,24 @@ declare type AddFundingSourceParams = {
   bankName: string;
 };
 
-declare type NewDwollaCustomerParams = {
+export interface BaseDwollaCustomer {
+  firstName: string;
+  lastName: string;
+  email: string;
+  type: "personal" | "business";
+}
+
+export interface FullDwollaCustomer extends BaseDwollaCustomer {
+  address1: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  dateOfBirth: string;
+  ssn: string;
+}
+
+
+{/*declare type NewDwollaCustomerParams = {
   firstName: string;
   lastName: string;
   email: string;
@@ -135,7 +152,7 @@ declare type NewDwollaCustomerParams = {
   postalCode: string;
   dateOfBirth: string;
   ssn: string;
-};
+}; */}
 
 declare interface CreditCardProps {
   account: Account;

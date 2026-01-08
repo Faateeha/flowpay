@@ -1,5 +1,6 @@
 "use server";
 
+import { AddFundingSourceParams, BaseDwollaCustomer, CreateFundingSourceOptions, TransferParams } from "@/types";
 import { Client } from "dwolla-v2";
 
 const getEnvironment = (): "production" | "sandbox" => {
@@ -52,16 +53,21 @@ export const createOnDemandAuthorization = async () => {
 };
 
 export const createDwollaCustomer = async (
-  newCustomer: NewDwollaCustomerParams
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  newCustomer: any
 ) => {
   try {
-    return await dwollaClient
-      .post("customers", newCustomer)
-      .then((res) => res.headers.get("location"));
-  } catch (err) {
-    console.error("Creating a Dwolla Customer Failed: ", err);
+    const response = await dwollaClient.post("customers", newCustomer);
+    return response.headers.get("location");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    console.error("❌ DWOLLA ERROR BODY:");
+    console.error(error?.response?.body);
+    console.error("❌ DWOLLA STATUS:", error?.status);
+    throw new Error("Dwolla customer creation failed");
   }
 };
+
 
 export const createTransfer = async ({
   sourceFundingSourceUrl,
