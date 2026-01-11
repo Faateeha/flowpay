@@ -16,18 +16,15 @@ const Plaidlink = ({ user, variant }: PlaidLinkProps) => {
   const [token, setToken] = useState<string | null>(null);
 
   // ✅ Create link token ONCE
-  useEffect(() => {
-    if (!user || token) return;
-
+ useEffect(() => {
     const getLinkToken = async () => {
       const data = await createLinkToken(user);
-
-      // 🔑 MUST be link_token
-      setToken(data?.link_token);
+      console.log("PLAID LINK TOKEN (from server):", data?.linkToken);
+      setToken(data?.linkToken ?? null);
     };
 
-    getLinkToken();
-  }, [user, token]);
+    if (user) getLinkToken();
+  }, [user]);
 
   // ✅ Memoized success handler
   const onSuccess = useCallback<PlaidLinkOnSuccess>(
@@ -41,19 +38,14 @@ const Plaidlink = ({ user, variant }: PlaidLinkProps) => {
     },
     [user, router]
   );
+  
 
-  // ✅ MEMOIZE CONFIG (this stops double script injection)
-  const config = useMemo<PlaidLinkOptions>(
-    () => ({
-      token,
-      onSuccess,
-    }),
-    [token, onSuccess]
-  );
-
-  const { open, ready } = usePlaidLink(config);
-
-  if (!token) return null;
+   // eslint-disable-next-line react-hooks/rules-of-hooks
+   const { open, ready } = usePlaidLink({
+    token,
+    onSuccess,
+  });
+if (!token) return null;
 
   return (
     <>

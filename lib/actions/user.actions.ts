@@ -148,7 +148,7 @@ export const logoutAccount = async () => {
   }
 }
 
-export const createLinkToken = async (user: User) => {
+{/*export const createLinkToken = async (user: User) => {
   try {
     const tokenParams = {
       user: {
@@ -162,13 +162,39 @@ export const createLinkToken = async (user: User) => {
     }
 
     const response = await plaidClient.linkTokenCreate(tokenParams);
-
+    console.log("PLAID LINK TOKEN (Plaid):", response.data.link_token);
     return parseStringify({ link_Token: response.data.link_token })
   } catch (error) {
     console.log(" Plaid error data:", error.response?.data);
     throw error;
   }
-}
+}*/}
+
+export const createLinkToken = async (user: User) => {
+  try {
+    const response = await plaidClient.linkTokenCreate({
+      user: {
+        client_user_id: user.$id,
+      },
+      client_name: `${user.firstName} ${user.lastName}`,
+      products: ["auth"] as Products[],
+      language: "en",
+      country_codes: ["US"] as CountryCode[],
+      redirect_uri: "http://localhost:3000/plaid-redirect",
+    });
+
+    console.log("PLAID LINK TOKEN (SERVER):", response.data.link_token);
+
+    return {
+      linkToken: response.data.link_token,
+    };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    console.log("Plaid error data:", error.response?.data);
+    throw error;
+  }
+};
+
 
 export const createBankAccount = async ({
   userId,
