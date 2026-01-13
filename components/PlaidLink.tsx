@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "./ui/button";
+import Image from 'next/image'
 import {
   PlaidLinkOnSuccess,
   PlaidLinkOptions,
@@ -53,7 +54,7 @@ if (!token) return null;
         <Button
           onClick={() => open()}
           disabled={!ready}
-          className="text-[16px] rounded-lg border border-bankGradient bg-green-500 font-semibold text-white shadow-form"
+          className="text-[16px] rounded-lg border border-green-500 bg-green-500 font-semibold text-white shadow-form"
         >
           Connect bank
         </Button>
@@ -63,16 +64,19 @@ if (!token) return null;
           variant="ghost"
           className="flex cursor-pointer items-center justify-center gap-3 rounded-lg px-3 py-7 hover:bg-white lg:justify-start"
         >
-          <p className="hidden xl:block text-[16px] font-semibold text-black-2">
+          <Image src="/icons/connect-bank.png" alt="connect bank" width={24} height={24}/>
+          <p className="hidden text-[16px] font-semibold text-black xl:block">
             Connect bank
           </p>
         </Button>
       ) : (
         <Button
           onClick={() => open()}
-          className="flex cursor-pointer gap-3 rounded-lg bg-transparent"
+          className="flex justify-start! cursor-pointer gap-3 rounded-lg bg-transparent! flex-row"
         >
-          <p className="text-[16px] font-semibold text-black-2">
+           <Image src="/icons/connect-bank.png" alt="connect bank" width={24} height={24}/>
+          <p className=" hidden xl:block text-[16px] font-semibold text-black">
+            
             Connect bank
           </p>
         </Button>

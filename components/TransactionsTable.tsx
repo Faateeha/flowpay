@@ -19,7 +19,7 @@ const CategoryBadge = ({ category }: CategoryBadgeProps) => {
    } = transactionCategoryStyles[category as keyof typeof transactionCategoryStyles] || transactionCategoryStyles.default
    
   return (
-    <div className={cn('category-badge', borderColor, chipBackgroundColor)}>
+    <div className={cn('flex-center truncate w-fit gap-1 rounded-2xl border-[1.5px] py-[2px] pl-1.5 pr-2', borderColor, chipBackgroundColor)}>
       <div className={cn('size-2 rounded-full', backgroundColor)} />
       <p className={cn('text-[12px] font-medium', textColor)}>{category}</p>
     </div>
@@ -32,7 +32,7 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
       <TableHeader className="bg-[#f9fafb]">
         <TableRow>
           <TableHead className="px-2">Transaction</TableHead>
-          <TableHead className="px-2">Amounts</TableHead>
+          <TableHead className="px-2">Amount</TableHead>
           <TableHead className="px-2">Status</TableHead>
           <TableHead className="px-2">Date</TableHead>
           <TableHead className="px-2 max-md:hidden">Channel</TableHead>
@@ -46,19 +46,45 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
 
           const isDebit = t.type === 'debit';
           const isCredit = t.type === 'credit';
+          
+
 
          return (
-            <TableRow key={t.id}>
-                <TableCell>
-                    <div>
-                        <h1>
-                            {t.name}
-                        </h1>
-                        <div>babe</div>
-                    </div>
-                </TableCell>
+            <TableRow key={t.id} className={`${isDebit || amount[0] === '-' ? 'bg-[#FFFBFA]' : 'bg-[#F6FEF9]'} !over:bg-none border-b-DEFAULT!`}>
+              <TableCell className="max-w-[250px] pl-2 pr-10">
+                <div className="flex items-center gap-3">
+                  <h1 className="text-[14px] truncate font-semibold text-[#344054]">
+                    {removeSpecialCharacters(t.name)}
+                  </h1>
+                </div>
+              </TableCell>
+
+              <TableCell className={`pl-2 pr-10 font-semibold ${
+                isDebit || amount[0] === '-' ?
+                  'text-[#f04438]'
+                  : 'text-[#039855]'
+              }`}>
+                {isDebit ? `-${amount}` : isCredit ? amount : amount}
+              </TableCell>
+
+              <TableCell className="pl-2 pr-10">
+                <CategoryBadge category={status} /> 
+              </TableCell>
+
+              <TableCell className="min-w-32 pl-2 pr-10">
+                {formatDateTime(new Date(t.date)).dateTime}
+              </TableCell>
+
+              <TableCell className="pl-2 pr-10 capitalize min-w-24">
+               {t.paymentChannel}
+              </TableCell>
+
+              <TableCell className="pl-2 pr-10 max-md:hidden">
+               <CategoryBadge category={t.category} /> 
+              </TableCell>
             </TableRow>
-         )
+          )
+         
         })}
       </TableBody>
     </Table>

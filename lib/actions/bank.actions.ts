@@ -69,6 +69,7 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
   try {
     // get bank from db
     const bank = await getBank({ documentId: appwriteItemId });
+    
 
     // get account info from plaid
     const accountsResponse = await plaidClient.accountsGet({
@@ -121,10 +122,10 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     //);
 
     return parseStringify({
-      data: account,
-      transactions: allTransactions,
-    });
-  } catch (error) {
+     data: account,
+      transactions: transactions,
+   });
+   } catch (error) {
     console.error("An error occurred while getting the account:", error);
   }
 };
@@ -152,7 +153,9 @@ export const getTransactions = async ({
   accessToken,
 }: getTransactionsProps) => {
   let hasMore = true;
-  let transactions: any = [];
+  let cursor: string | null = null;
+  // eslint-disable-next-line prefer-const
+  let transactions: any[] = [];
 
   try {
     // Iterate through each page of new transaction updates for item
@@ -163,7 +166,7 @@ export const getTransactions = async ({
 
       const data = response.data;
 
-      transactions = response.data.added.map((transaction) => ({
+      const mappedTransactions = data.added.map((transaction) => ({
         id: transaction.transaction_id,
         name: transaction.name,
         paymentChannel: transaction.payment_channel,
@@ -176,11 +179,15 @@ export const getTransactions = async ({
         image: transaction.logo_url,
       }));
 
+    transactions.push(...mappedTransactions);
+
+      cursor = data.next_cursor;
       hasMore = data.has_more;
     }
 
     return parseStringify(transactions);
   } catch (error) {
-    console.error("An error occurred while getting the accounts:", error);
+    console.error("An error occurred while getting the accounts:",error.response?.data || error);
+    return [];
   }
 }; 
