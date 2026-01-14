@@ -72,7 +72,7 @@ if (!token) return null;
       ) : (
         <Button
           onClick={() => open()}
-          className="flex justify-start! cursor-pointer gap-3 rounded-lg bg-transparent! flex-row"
+          className="flex justify-start! cursor-pointer gap-3 border-none bg-transparent! flex-row"
         >
            <Image src="/icons/connect-bank.png" alt="connect bank" width={24} height={24}/>
           <p className=" hidden xl:block text-[16px] font-semibold text-black">

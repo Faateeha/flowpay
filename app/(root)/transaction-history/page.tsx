@@ -1,11 +1,12 @@
 import HeaderBox from '@/components/HeaderBox'
-import { Pagination } from '@/components/Pagination';
+//import { Pagination } from '@/components/Pagination';
 import TransactionsTable from '@/components/TransactionsTable';
 import { getAccount, getAccounts } from '@/lib/actions/bank.actions';
 import { getLoggedInUser } from '@/lib/actions/user.actions';
 import { formatAmount } from '@/lib/utils';
 import { SearchParamProps } from '@/types';
 import React from 'react'
+import { Pagination } from '@/components/Pagination';
 
 const TransactionHistory = async ({ searchParams: { id, page }}:SearchParamProps) => {
   const currentPage = Number(page as string) || 1;
@@ -67,7 +68,7 @@ const currentTransactions = account?.transactions.slice(
                 <Pagination totalPages={totalPages} page={currentPage} />
               </div>
             )}
-        </section>
+        </section> 
       </div>
     </div>
   )

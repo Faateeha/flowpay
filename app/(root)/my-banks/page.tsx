@@ -13,7 +13,7 @@ const MyBanks = async () => {
 
   return (
     <section className='flex'>
-      <div className="my-banks">
+      <div className="flex h-screen max-h-screen w-full flex-col gap-8 bg-gray-25 p-8 xl:py-12">
         <HeaderBox 
           title="My Bank Accounts"
           subtext="Effortlessly manage your banking activites."

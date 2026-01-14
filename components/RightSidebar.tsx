@@ -2,10 +2,13 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import BankCard from './BankCard'
-import { RightSidebarProps } from '@/types'
+import { countTransactionCategories } from '@/lib/utils'
+import Category from './Category'
+import { CategoryCount, RightSidebarProps } from '@/types'
 
 const RightSidebar = ({user, transactions, banks} : RightSidebarProps) => {
     if (!user) return null;
+    const categories: CategoryCount[] = countTransactionCategories(transactions);
     
 
   const primaryBank = banks?.[0];
@@ -57,6 +60,15 @@ const RightSidebar = ({user, transactions, banks} : RightSidebarProps) => {
             )}
             </div>
          )}
+         <div className="mt-10 flex flex-1 flex-col gap-6">
+          <h2 className="header-2">Top categories</h2>
+
+          <div className='space-y-5'>
+            {categories.map((category, index) => (
+              <Category key={category.name} category={category} />
+            ))}
+          </div>
+        </div>
       </section>
     </aside>
   )
