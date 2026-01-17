@@ -1,4 +1,5 @@
 /* eslint-disable no-prototype-builtins */
+import { AccountTypes, CategoryCount, Transaction } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
@@ -136,38 +137,33 @@ export function countTransactionCategories(
   const categoryCounts: { [category: string]: number } = {};
   let totalCount = 0;
 
-  // Iterate over each transaction
-  transactions &&
-    transactions.forEach((transaction) => {
-      // Extract the category from the transaction
-      const category = transaction.category;
+  transactions?.forEach((transaction) => {
+    const rawCategory = transaction.category;
 
-      // If the category exists in the categoryCounts object, increment its count
-      if (categoryCounts.hasOwnProperty(category)) {
-        categoryCounts[category]++;
-      } else {
-        // Otherwise, initialize the count to 1
-        categoryCounts[category] = 1;
-      }
+    // ✅ normalize & fallback
+    const category =
+      typeof rawCategory === "string" && rawCategory.trim()
+        ? rawCategory
+        : "Other";
 
-      // Increment total count
-      totalCount++;
-    });
+    if (categoryCounts[category]) {
+      categoryCounts[category]++;
+    } else {
+      categoryCounts[category] = 1;
+    }
 
-  // Convert the categoryCounts object to an array of objects
-  const aggregatedCategories: CategoryCount[] = Object.keys(categoryCounts).map(
-    (category) => ({
-      name: category,
-      count: categoryCounts[category],
+    totalCount++;
+  });
+
+  return Object.entries(categoryCounts)
+    .map(([name, count]) => ({
+      name,
+      count,
       totalCount,
-    })
-  );
-
-  // Sort the aggregatedCategories array by count in descending order
-  aggregatedCategories.sort((a, b) => b.count - a.count);
-
-  return aggregatedCategories;
+    }))
+    .sort((a, b) => b.count - a.count);
 }
+
 
 export function extractCustomerIdFromUrl(url: string) {
   // Split the URL string by '/'

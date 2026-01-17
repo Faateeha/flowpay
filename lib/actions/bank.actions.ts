@@ -154,14 +154,13 @@ export const getTransactions = async ({
 }: getTransactionsProps) => {
   let hasMore = true;
   let cursor: string | null = null;
-  // eslint-disable-next-line prefer-const
   let transactions: any[] = [];
 
   try {
-    // Iterate through each page of new transaction updates for item
     while (hasMore) {
       const response = await plaidClient.transactionsSync({
         access_token: accessToken,
+        cursor,
       });
 
       const data = response.data;
@@ -169,17 +168,25 @@ export const getTransactions = async ({
       const mappedTransactions = data.added.map((transaction) => ({
         id: transaction.transaction_id,
         name: transaction.name,
-        paymentChannel: transaction.payment_channel,
-        type: transaction.payment_channel,
-        accountId: transaction.account_id,
         amount: transaction.amount,
         pending: transaction.pending,
-        category: transaction.category ? transaction.category[0] : "",
         date: transaction.date,
         image: transaction.logo_url,
+
+        accountId: transaction.account_id,
+        paymentChannel: transaction.payment_channel,
+
+        // ✅ FIXED
+        type: transaction.amount > 0 ? "debit" : "credit",
+
+        // ✅ FIXED CATEGORY
+        category:
+          transaction.category?.[0] ??
+          transaction.personal_finance_category?.primary ??
+          "Other",
       }));
 
-    transactions.push(...mappedTransactions);
+      transactions.push(...mappedTransactions);
 
       cursor = data.next_cursor;
       hasMore = data.has_more;
@@ -187,7 +194,10 @@ export const getTransactions = async ({
 
     return parseStringify(transactions);
   } catch (error) {
-    console.error("An error occurred while getting the accounts:",error.response?.data || error);
+    console.error(
+      "An error occurred while getting the accounts:",
+      error.response?.data || error
+    );
     return [];
   }
-}; 
+};
