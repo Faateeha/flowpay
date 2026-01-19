@@ -131,22 +131,39 @@ export function getAccountTypeColors(type: AccountTypes) {
   }
 }
 
+export const PLAID_CATEGORY_MAP: Record<string, string> = {
+  "Restaurants": "Food and Drink",
+  "Coffee Shop": "Food and Drink",
+  "Food & Drink": "Food and Drink",
+  "Travel": "Travel",
+  "Airlines": "Travel",
+  "Hotels": "Travel",
+  "Bank Fees": "Bank Fees",
+  "Transfer": "Transfer",
+  "Payment": "Payment",
+  "Groceries": "Food and Drink",
+  "Bars": "Food and Drink",
+  // add more mappings as needed
+};
+
 export function countTransactionCategories(
   transactions: Transaction[]
 ): CategoryCount[] {
   const categoryCounts: { [category: string]: number } = {};
   let totalCount = 0;
 
-  transactions?.forEach((transaction) => {
+  transactions.forEach((transaction) => {
+    // Raw category from Plaid
     const rawCategory = transaction.category;
 
-    // ✅ normalize & fallback
+    // Map raw Plaid category to friendly category
     const category =
-      typeof rawCategory === "string" && rawCategory.trim()
-        ? rawCategory
-        : "Other";
+      PLAID_CATEGORY_MAP[rawCategory] || (rawCategory ? rawCategory : "Other");
 
-    if (categoryCounts[category]) {
+    // 🔹 Log raw vs mapped category
+    console.log("Raw Plaid category:", rawCategory, "| Mapped category:", category);
+
+    if (categoryCounts.hasOwnProperty(category)) {
       categoryCounts[category]++;
     } else {
       categoryCounts[category] = 1;
@@ -155,14 +172,20 @@ export function countTransactionCategories(
     totalCount++;
   });
 
-  return Object.entries(categoryCounts)
-    .map(([name, count]) => ({
-      name,
-      count,
+  const aggregatedCategories: CategoryCount[] = Object.keys(categoryCounts).map(
+    (category) => ({
+      name: category,
+      count: categoryCounts[category],
       totalCount,
-    }))
-    .sort((a, b) => b.count - a.count);
+    })
+  );
+
+  aggregatedCategories.sort((a, b) => b.count - a.count);
+
+  return aggregatedCategories;
 }
+
+
 
 
 export function extractCustomerIdFromUrl(url: string) {
@@ -205,4 +228,7 @@ export const authFormSchema = (type: string) =>  z.object({
    email: z.string().email(),
   password: z.string().min(8),
 })
+
+// utils/categoryMapping.ts
+
 

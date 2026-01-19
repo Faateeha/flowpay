@@ -1,4 +1,4 @@
-
+import Image from "next/image";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -10,8 +10,13 @@ export default function RootLayout({
         {children}
         <div className="flex h-screen w-full sticky top-0 items-center justify-end bg-green-50 max-lg:hidden">
           <div>
-            image
-            {/*width-500 height-500 */}
+            <Image 
+            src="/icons/side.png"
+            alt="Auth image"
+            width={500}
+            height={500}
+            className="rounded-l-xl object-contain"
+          />
           </div>
         </div>
     </main>

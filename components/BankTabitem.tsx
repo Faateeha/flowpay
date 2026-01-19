@@ -22,12 +22,12 @@ export const BankTabItem = ({ account, appwriteItemId }: BankTabItemProps) => {
     <div
       onClick={handleBankChange}
       className={cn(`gap-[18px] border-b-2 flex px-2 sm:px-4 py-2 transition-all`, {
-        " border-blue-600": isActive,
+        " border-green-500": isActive,
       })}
     >
       <p
         className={cn(`text-[16px] line-clamp-1 flex-1 font-medium text-gray-500`, {
-          " text-blue-600": isActive,
+          " text-green-500": isActive,
         })}
       >
         {account.name}
