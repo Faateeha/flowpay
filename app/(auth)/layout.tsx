@@ -15,7 +15,7 @@ export default function RootLayout({
   <div className="sticky top-0 hidden h-screen w-1/2 items-center justify-center bg-green-50 lg:flex">
     <div className="relative h-full w-full">
       <Image
-        src="/icons/side.png"
+        src="/icons/auth.png"
         alt="Auth image"
         fill
         className="rounded-l-xl object-contain"
@@ -24,8 +24,6 @@ export default function RootLayout({
     </div>
   </div>
 </main>
-
-
 
   );
 }
