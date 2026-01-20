@@ -31,15 +31,19 @@ const BankInfo = ({ account, appwriteItemId, type }: BankInfoProps) => {
   return (
     <div
       onClick={handleBankChange}
-      className={cn(`gap-[18px] flex p-4 transition-all border bg-blue-200 border-transparent ${colors.bg}`, {
-        "shadow-sm border-blue-700": type === "card" && isActive,
-        "rounded-xl": type === "card",
-        "hover:shadow-sm cursor-pointer": type === "card",
-      })}
+      className={cn(
+        `
+        flex gap-4 p-4 transition-all cursor-pointer
+        rounded-xl border
+        bg-green-50 hover:bg-green-100
+      `,
+        {
+          "ring-2 ring-green-500 bg-green-100": type === "card" && isActive,
+        }
+      )}
     >
-      <figure
-        className={`flex-center h-fit rounded-full bg-blue-100 ${colors.lightBg}`}
-      >
+      {/* Icon */}
+      <figure className="flex-center h-fit rounded-full bg-green-200/60">
         <Image
           src="/icons/send-money.png"
           width={20}
@@ -48,23 +52,22 @@ const BankInfo = ({ account, appwriteItemId, type }: BankInfoProps) => {
           className="m-2 min-w-5"
         />
       </figure>
-      <div className="flex w-full flex-1 flex-col justify-center gap-1">
-        <div className="bank-info_content">
-          <h2
-            className={`text-[16px] line-clamp-1 flex-1 font-bold text-blue-900 ${colors.title}`}
-          >
+
+      {/* Content */}
+      <div className="flex flex-1 flex-col justify-center gap-1">
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-[15px] font-semibold text-green-900 line-clamp-1">
             {account.name}
           </h2>
+
           {type === "full" && (
-            <p
-              className={`text-12 rounded-full px-3 py-1 font-medium text-blue-700 ${colors.subText} ${colors.lightBg}`}
-            >
+            <span className="rounded-full bg-green-200 px-3 py-1 text-xs font-medium text-green-800">
               {account.subtype}
-            </p>
+            </span>
           )}
         </div>
 
-        <p className={`text-[16px] font-medium text-blue-700 ${colors.subText}`}>
+        <p className="text-[15px] font-medium text-green-700">
           {formatAmount(account.currentBalance)}
         </p>
       </div>

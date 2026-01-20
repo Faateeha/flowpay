@@ -1,12 +1,8 @@
 "use server";
 
 import {
-  ACHClass,
+
   CountryCode,
-  TransferAuthorizationCreateRequest,
-  TransferCreateRequest,
-  TransferNetwork,
-  TransferType,
 } from "plaid";
 
 import { plaidClient } from "../plaid";
@@ -154,13 +150,14 @@ export const getTransactions = async ({
 }: getTransactionsProps) => {
   let hasMore = true;
   let cursor: string | null = null;
-  let transactions: any[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const transactions: any[] = [];
 
   try {
     while (hasMore) {
       const response = await plaidClient.transactionsSync({
         access_token: accessToken,
-        cursor,
+        ...(cursor && { cursor }),
       });
 
       const data = response.data;
@@ -196,7 +193,7 @@ export const getTransactions = async ({
   } catch (error) {
     console.error(
       "An error occurred while getting the accounts:",
-      error.response?.data || error
+       error
     );
     return [];
   }

@@ -16,7 +16,7 @@ const RightSidebar = ({user, transactions, banks} : RightSidebarProps) => {
   return (
     <aside className='no-scrollbar hidden h-screen max-h-screen flex-col border-l border-gray-200 xl:flex w-[355px] xl:overflow-y-scroll !important'>
       <section className='flex flex-col pb-8'>
-        <div className='h-[120px] w-full bg-cover bg-no-repeat' style={{backgroundImage: "url('/icons/logo2.png')"}}>
+        <div className='h-[120px] w-full bg-cover bg-no-repeat' style={{backgroundImage: "url('/icons/side-logo.png')"}}>
         <div className="relative flex px-6 max-xl:justify-center">
           <div className="flex-center absolute top-8 size-24 rounded-full bg-gray-100 border-8 border-white p-2 shadow-profile">
             <span className="text-5xl font-bold text-green-400">{user.firstName[0]}</span>
