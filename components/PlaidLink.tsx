@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect,  useState } from "react";
 import { Button } from "./ui/button";
 import Image from 'next/image'
 import {
   PlaidLinkOnSuccess,
-  PlaidLinkOptions,
+
   usePlaidLink,
 } from "react-plaid-link";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ const Plaidlink = ({ user, variant }: PlaidLinkProps) => {
  useEffect(() => {
     const getLinkToken = async () => {
       const data = await createLinkToken(user);
-      console.log("PLAID LINK TOKEN (from server):", data?.linkToken);
+    
       setToken(data?.linkToken ?? null);
     };
 

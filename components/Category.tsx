@@ -32,8 +32,6 @@ const Category = ({ category }: CategoryProps) => {
       normalizedCategory as keyof typeof topCategoryStyles
     ] ?? topCategoryStyles.default;
 
-    console.log("CATEGORY OBJECT:", category);
-console.log("CATEGORY NAME:", category?.name);
 
   return (
     <div className={cn("gap-[18px] flex p-4 rounded-xl", bg)}>

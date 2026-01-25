@@ -63,13 +63,16 @@ const AuthForm = ({ type }: { type: string }) => {
             password: data.password,
           })
 
-          if(response) router.push('/')
+          if(response) router.replace('/')
+            return;
         }
       } catch (error) {
         console.log(error);
       } finally {
-        setIsLoading(false);
-      }
+  if (type !== "sign-in") {
+    setIsLoading(false);
+  }
+}
     }
 
   return (

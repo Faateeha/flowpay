@@ -161,7 +161,7 @@ export function countTransactionCategories(
       PLAID_CATEGORY_MAP[rawCategory] || (rawCategory ? rawCategory : "Other");
 
     // 🔹 Log raw vs mapped category
-    console.log("Raw Plaid category:", rawCategory, "| Mapped category:", category);
+    
 
     if (categoryCounts.hasOwnProperty(category)) {
       categoryCounts[category]++;
