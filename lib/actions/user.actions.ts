@@ -40,11 +40,12 @@ export const signIn = async ({ email, password }: signInProps) => {
     const session = await account.createEmailPasswordSession(email, password);
 
     (await cookies()).set("appwrite-session", session.secret, {
-      path: "/",
-      httpOnly: true,
-      sameSite: "strict",
-      secure: true,
-    });
+  path: "/",
+  httpOnly: true,
+  sameSite: "lax",
+  secure: process.env.NODE_ENV === "production",
+});
+
 
     const user = await getUserInfo({ userId: session.userId }) 
 

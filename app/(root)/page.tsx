@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import React from "react";
+import { redirect } from "next/navigation";
 import HeaderBox from "@/components/HeaderBox";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import RightSidebar from "@/components/RightSidebar";
@@ -15,6 +16,9 @@ const Home = async ({ searchParams }: SearchParamProps) => {
   const currentPage = Number(page) || 1;
 
   const loggedIn = await getLoggedInUser();
+  if (!loggedIn) {
+  redirect("/sign-in");
+}
 
   const accounts = await getAccounts({
     userId: loggedIn.$id,
